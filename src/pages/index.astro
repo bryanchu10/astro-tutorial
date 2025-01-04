@@ -1,4 +1,6 @@
 ---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import '../styles/global.scss';
 const pageTitle = 'Astro is so COOL!';
 ---
@@ -12,10 +14,10 @@ const pageTitle = 'Astro is so COOL!';
 		<title>{ pageTitle }</title>
 	</head>
 	<body>
-		<a href="/">Home</a>
-    <a href="/about/">About</a>
-    <a href="/blog/">Blog</a>
+		<Header/>
 
 		<h1>Astro is so COOL!</h1>
+
+		<Footer/>
 	</body>
 </html>
