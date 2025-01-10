@@ -1,5 +1,5 @@
 ---
-title: My Third Blog Post
+title: 第三則部落格貼文
 author: Astro Learner
 description: "I had some challenges, but asking in the community really helped!"
 image:
