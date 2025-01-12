@@ -1,15 +1,16 @@
 ---
 import { languages } from "../i18n/ui";
-import { getLangFromUrl, useTranslatedPath } from "../i18n/utils";
+import { getLangFromUrl, useTranslatedPath, usePathWithoutLang } from "../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
 const { pathname } = Astro.url;
+const pathWithoutLang = usePathWithoutLang(lang);
 ---
 
 <ul class="language-picker">
   {Object.entries(languages).map(([lang, label]) => (
     <li>
-      <a href={translatePath(pathname, lang)}>{label}</a>
+      <a href={translatePath(pathWithoutLang(pathname), lang)}>{label}</a>
     </li>
   ))}
 </ul>
