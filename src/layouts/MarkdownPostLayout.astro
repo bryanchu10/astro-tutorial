@@ -1,8 +1,12 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getLangFromUrl, useTranslatedPath } from "@/i18n/utils";
 const { frontmatter } = Astro.props;
 const pageTitle = frontmatter.title;
+const lang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(lang);
 ---
+
 <BaseLayout pageTitle={pageTitle}>
   <p>{frontmatter.pubDate.toLocaleDateString()}</p>
   <p><em>{frontmatter.description}</em></p>
@@ -11,7 +15,7 @@ const pageTitle = frontmatter.title;
   <div class="tags">
     {
       frontmatter.tags.map((tag: string) =>
-        <p><a class="tag" href={`/tags/${tag}/`}>{tag}</a></p>
+        <p><a class="tag" href={`${translatePath(`/tags/${tag}/`)}`}>{tag}</a></p>
       )
     }
   </div>

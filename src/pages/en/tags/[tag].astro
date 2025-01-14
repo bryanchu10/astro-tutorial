@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import BlogPost from '@/components/BlogPost.astro';
-import { getLangFromUrl } from "@/i18n/utils";
+import { getLangFromUrl, useTranslatedPath } from "@/i18n/utils";
 
 export async function getStaticPaths() {
   const allPosts = await getCollection('blog');
@@ -25,13 +25,15 @@ const filteredPostsByLang = posts.filter((post) =>
   post.id.split('/')[0] === lang.toLowerCase()
 );
 
+const translatePath = useTranslatedPath(lang);
+
 ---
 <BaseLayout pageTitle={tag}>
   <p>Posts tagged with {tag}</p>
   <ul>
     {
       filteredPostsByLang.map((post) =>
-        <BlogPost url={`/posts/${post.id}/`} title={post.data.title} />
+        <BlogPost url={`${translatePath(`/posts/${post.id}/`)}`} title={post.data.title} />
       )
     }
   </ul>
