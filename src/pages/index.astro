@@ -8,7 +8,6 @@ const pageTitle = '太神啦！Astro';
 const allPosts = await getCollection('blog', ({ id }) => {
 	return id.startsWith(lang.toLowerCase());
 });
-console.log(allPosts);
 ---
 <BaseLayout pageTitle={pageTitle}>
 	<h2>My awesome blog subtitle</h2>

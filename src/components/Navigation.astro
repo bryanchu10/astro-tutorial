@@ -4,7 +4,7 @@ const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
 const translatePath = useTranslatedPath(lang)
 ---
-<div class="nav-links">
-  <a href={translatePath('/')}>{t('nav.home')}</a>
-  <a href={translatePath('/tags/')}>{t('nav.tags')}</a>
+<div>
+  <a class="block" href={translatePath('/')}>{t('nav.home')}</a>
+  <a class="block" href={translatePath('/tags/')}>{t('nav.tags')}</a>
 </div>

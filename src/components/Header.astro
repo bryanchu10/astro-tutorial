@@ -1,11 +1,11 @@
 ---
-import Hamburger from '@/components/Hamburger.astro';
+import Hamburger from '@/components/Hamburger';
 import Navigation from '@/components/Navigation.astro';
 import ThemeIcon from '@/components/ThemeIcon.astro';
 ---
-<header>
+<header class="p-2">
   <nav>
-    <Hamburger />
+    <Hamburger client:load />
     <ThemeIcon />
     <Navigation />
   </nav>
