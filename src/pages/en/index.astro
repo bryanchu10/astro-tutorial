@@ -1,10 +1,24 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Greeting from "@/components/Greeting.vue";
+import { getCollection } from "astro:content";
+import { getLangFromUrl } from "@/i18n/utils";
+const lang = getLangFromUrl(Astro.url);
 const pageTitle = 'Astro is so COOL!';
 const pageLang = 'en';
+const allPosts = await getCollection('blog', ({ id }) => {
+	console.log(id);
+	return id.startsWith(lang.toLowerCase());
+});
 ---
 <BaseLayout pageTitle={pageTitle} lang={pageLang}>
 	<h2>My awesome blog subtitle</h2>
 	<Greeting client:load messages={["Hi", "Hello", "Howdy", "Hey there"]} />
+	<ul>
+		{allPosts.map((post) => (
+			<li>
+				<a href={`/posts/${post.id}`}>{post.data.title}</a>
+			</li>
+		))}
+	</ul>
 </BaseLayout>

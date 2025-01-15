@@ -1,0 +1,35 @@
+---
+import { getCollection, render } from 'astro:content';
+import MarkdownPostLayout from '@/layouts/MarkdownPostLayout.astro';
+import { defaultLang } from '@/i18n/ui';
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+
+  const paths = posts.map(post => {
+    const [lang, ...slug] = post.id.split('/');
+    const langUrl = defaultLang.toLocaleLowerCase() === lang ? '' : `${lang}/`;
+    return {
+      params: { slug: `${langUrl}posts/${post.id.split('/')[1]}/${post.data.urlTitle}` },
+      props: { post },
+    };
+  });
+
+  return paths;
+
+  // return posts.map(post => {
+  //   console.log(post)
+  //   const [lang, ...slug] = post.id.split('/');
+  //   return {
+  //     params: { lang, slug: `${post.id.split('/')[1]}/${post.data.urlTitle}` },
+  //     props: { post },
+  //   };
+  // });
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<MarkdownPostLayout frontmatter={post.data}>
+  <Content />
+</MarkdownPostLayout>
