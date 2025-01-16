@@ -1,15 +1,13 @@
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { isHeaderNavigationOpen, toggleHeaderNavigation } from '@/stores';
 
 export default function Hamburger() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => setIsOpen((prev) => !prev)}
-      aria-expanded={isOpen}
+      onClick={toggleHeaderNavigation}
+      aria-expanded={isHeaderNavigationOpen.get()}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +16,7 @@ export default function Hamburger() {
         viewBox="0 0 24 24"
         stroke="currentColor"
       >
-        {isOpen ? (
+        {isHeaderNavigationOpen.get() ? (
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -39,22 +37,3 @@ export default function Hamburger() {
   );
 }
 
-// ---
-// import { Button } from '@/components/ui/button'
-// ---
-// <Button variant="ghost" size="icon">
-//   <svg
-//     xmlns="http://www.w3.org/2000/svg"
-//     class="h-6 w-6"
-//     fill="none"
-//     viewBox="0 0 24 24"
-//     stroke="currentColor"
-//   >
-//     <path
-//       stroke-linecap="round"
-//       stroke-linejoin="round"
-//       stroke-width="2"
-//       d="M4 6h16M4 12h16m-7 6h7"
-//     />
-//   </svg>
-// </Button>

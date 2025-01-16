@@ -7,6 +7,25 @@ import ThemeIcon from '@/components/ThemeIcon.astro';
   <nav>
     <Hamburger client:load />
     <ThemeIcon />
-    <Navigation />
+    <div data-header-navigation class="grid transition-[grid-template-rows] ease-in-out duration-300 grid-rows-[0fr]">
+      <div class="overflow-hidden">
+        <Navigation />
+      </div>
+    </div>
   </nav>
 </header>
+
+<script>
+  import { isHeaderNavigationOpen } from "@/stores";
+  
+  const target = document.querySelector('[data-header-navigation]');
+  isHeaderNavigationOpen.subscribe((open) => {
+    if (open) {
+      target?.classList.remove('grid-rows-[0fr]');
+      target?.classList.add('grid-rows-[1fr]');
+    } else {
+      target?.classList.remove('grid-rows-[1fr]');
+      target?.classList.add('grid-rows-[0fr]');
+    }
+  });
+</script>
