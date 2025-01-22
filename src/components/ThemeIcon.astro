@@ -1,4 +1,7 @@
 ---
+// import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+// const lang = getLangFromUrl(Astro.url);
+// const t = useTranslations(lang);
 ---
 <button id="themeToggle">
   <svg width="30px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -20,13 +23,48 @@
 </style>
 
 <script is:inline>
+  const toggleBtn = document.getElementById("themeToggle");
+
+  // detect current locale
+  const lang = document.documentElement.lang;
+
+  let switchToDarkStr = ''
+  let switchToLightStr = ''
+
+  switch (lang) {
+    case 'zh-TW':
+      switchToDarkStr = '切換至深色主題'
+      switchToLightStr = '切換至淺色主題'
+      break;
+    default:
+      switchToDarkStr = 'Switch to dark theme'
+      switchToLightStr = 'Switch to light theme'
+      break;
+  }
+
+  // detect if document.documentElement has class 'dark'
+
+  if (document.documentElement.classList.contains("dark")) {
+    toggleBtn.setAttribute("aria-label", switchToLightStr);
+  } else {
+    toggleBtn.setAttribute("aria-label", switchToDarkStr);
+  }
+
   const handleToggleClick = () => {
     const element = document.documentElement;
+    const button = document.getElementById("themeToggle");
     element.classList.toggle("dark");
+    if (element.classList.contains("dark")) {
+      button.setAttribute("aria-label", switchToLightStr);
+    } else {
+      button.setAttribute("aria-label", switchToDarkStr);
+    }
+
 
     const isDark = element.classList.contains("dark");
     localStorage.setItem("theme", isDark ? "dark" : "light");
   }
 
   document.getElementById("themeToggle")?.addEventListener("click", handleToggleClick);
+
 </script>
