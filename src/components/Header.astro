@@ -2,14 +2,25 @@
 import Hamburger from '@/components/Hamburger';
 import Navigation from '@/components/Navigation.astro';
 import ThemeIcon from '@/components/ThemeIcon.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '@/i18n/utils';
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
 ---
-<header class="p-2">
+<header class="flex flex-col py-2 pr-2 pl-4 fixed top-0 bg-background w-full min-h-14 border-b-2 lg:flex-row lg:justify-between lg:pr-4">
+  <div class="flex items-center justify-between">
+    <a href={translatePath('/')}>{t('header.logoText')}</a>
+    <div class="lg:hidden">
+      <Hamburger client:load/>
+    </div>
+  </div>
   <nav>
-    <Hamburger client:load />
-    <ThemeIcon />
-    <div data-header-navigation class="grid transition-[grid-template-rows] ease-in-out duration-300 grid-rows-[0fr]">
-      <div class="overflow-hidden">
+    <div data-header-navigation class="grid transition-[grid-template-rows] ease-in-out duration-300 grid-rows-[0fr] lg:flex">
+      <div class="overflow-hidden lg:flex lg:gap-4">
         <Navigation />
+        <div class="pl-2 lg:pl-0 lg:flex">
+          <ThemeIcon />
+        </div>
       </div>
     </div>
   </nav>
