@@ -14,6 +14,8 @@ export const ui = {
     'nav.blog': 'Blog',
     'nav.tags': 'Tags',
     'header.logoText': "Let's make some notes!",
+    'index.title': "Let's make some notes!",
+    'index.h1': "Let's make some notes!"
   },
   'zh-TW': {
     'nav.home': '首頁',
@@ -21,5 +23,7 @@ export const ui = {
     'nav.blog': '部落格',
     'nav.tags': '標籤',
     'header.logoText': '寫點筆記吧！',
+    'index.title': '寫點筆記吧！',
+    'index.h1': '寫點筆記吧！'
   },
 } as const;

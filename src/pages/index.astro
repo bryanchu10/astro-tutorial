@@ -1,23 +1,41 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import Greeting from "@/components/Greeting.vue";
 import { getCollection } from "astro:content";
-import { getLangFromUrl } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import {
+	Card,
+	CardImage,
+	CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+ } from "@/components/ui/card";
 const lang = getLangFromUrl(Astro.url);
-const pageTitle = '太神啦！Astro';
+const t = useTranslations(lang);
+const pageTitle = t('index.title');
 const allPosts = await getCollection('blog', ({ id }) => {
 	return id.startsWith(lang.toLowerCase());
 });
 ---
 <BaseLayout pageTitle={pageTitle}>
-	<h2>My awesome blog subtitle</h2>
-	<Greeting client:load messages={["Hi", "Hello", "Howdy", "Hey there"]} />
-	<ul>
-		{allPosts.map((post) => (
-			<li>
-				<a href={`/posts/${post.id}`}>{post.data.title}</a>
-			</li>
-		))}
-	</ul>
+	<h1 class="hidden">{t('index.h1')}</h1>
+	<div class="font-noto-serif text-9xl leading-tight opacity-5 font-medium">We do something not because we want to see it done.</div>
+	<div class="container mx-auto px-4">
+		<ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+			{allPosts.map((post) => (
+				<li>
+					<Card>
+						<CardImage>
+							<img src={post.data.image.url} alt={post.data.title} />
+						</CardImage>
+						<CardHeader>
+							<CardTitle>{post.data.title}</CardTitle>
+						</CardHeader>
+					</Card>
+				</li>
+			))}
+		</ul>
+	</div>
 
 </BaseLayout>
