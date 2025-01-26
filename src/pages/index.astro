@@ -26,9 +26,7 @@ const allPosts = await getCollection('blog', ({ id }) => {
 			{allPosts.map((post) => (
 				<li>
 					<Card>
-						<CardImage>
-							<img src={post.data.image.url} alt={post.data.title} />
-						</CardImage>
+						<CardImage src={post.data.image.url} alt={post.data.image.alt} />
 						<CardHeader>
 							<CardTitle>{post.data.title}</CardTitle>
 						</CardHeader>

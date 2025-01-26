@@ -19,14 +19,17 @@ Card.displayName = "Card"
 
 const CardImage = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement> & { src: string; alt: string }
+>(({ className, src, alt, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("rounded-t-xl overflow-hidden", className)}
+    className={cn("rounded-t-xl overflow-hidden aspect-video", className)}
     {...props}
-  />
+  >
+    <img className="object-cover w-full h-full" src={src} alt={alt} />
+  </div>
 ))
+CardImage.displayName = "CardImage"
 
 const CardHeader = React.forwardRef<
   HTMLDivElement,
