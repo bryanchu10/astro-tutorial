@@ -15,7 +15,8 @@ export const ui = {
     'nav.tags': 'Tags',
     'header.logoText': "Let's make some notes!",
     'index.title': "Let's make some notes!",
-    'index.h1': "Let's make some notes!"
+    'index.h1': "Let's make some notes!",
+    'card.readMore': 'Read more',
   },
   'zh-TW': {
     'nav.home': '首頁',
@@ -24,6 +25,7 @@ export const ui = {
     'nav.tags': '標籤',
     'header.logoText': '寫點筆記吧！',
     'index.title': '寫點筆記吧！',
-    'index.h1': '寫點筆記吧！'
+    'index.h1': '寫點筆記吧！',
+    'card.readMore': '閱讀更多'
   },
 } as const;
