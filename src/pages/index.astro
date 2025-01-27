@@ -2,10 +2,6 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { getLangFromUrl, useTranslations, useTranslatedPath } from "@/i18n/utils";
-import dayjs from "dayjs";
-import utc from 'dayjs/plugin/utc';
-dayjs.extend(utc);
-
 import {
 	Card,
 	CardImage,
@@ -23,47 +19,18 @@ const pageTitle = t('index.title');
 const allPosts = await getCollection('blog', ({ id }) => {
 	return id.startsWith(lang.toLowerCase());
 });
-
-const postsWithLastModified = allPosts.map((post) => {
-  if (
-    post.rendered &&
-    post.rendered.metadata &&
-    typeof post.rendered.metadata.frontmatter === 'object' &&
-    post.rendered.metadata.frontmatter !== null &&
-    'lastModified' in post.rendered.metadata.frontmatter
-  ) {
-    const lastModified = dayjs(post.rendered.metadata.frontmatter.lastModified as string)
-      .utc()
-      .format('YYYY-MM-DD');
-    return {
-      ...post,
-      lastModified,
-    };
-  } else {
-		return {
-			...post,
-			lastModified: 'N/A',
-		};
-  }
-});
-
-const sortedPosts = postsWithLastModified.sort((a, b) => {
-	return dayjs(b.lastModified).unix() - dayjs(a.lastModified).unix();
-});
-
 ---
 <BaseLayout pageTitle={pageTitle}>
 	<h1 class="hidden">{t('index.h1')}</h1>
 	<div class="fixed font-noto-serif text-5xl md:text-9xl leading-tight opacity-5 font-medium">We do something not because we want to see it done.</div>
-	<div class="relative container mx-auto px-4 py-8 lg:py-16">
+	<div class="relative container mx-auto px-4 py-8">
 		<ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-			{sortedPosts.map((post) => (
+			{allPosts.map((post) => (
 				<li class="flex">
 					<Card>
 						<CardImage src={post.data.image.url} alt={post.data.image.alt} />
 						<CardHeader>
 							<CardTitle>{post.data.title}</CardTitle>
-							<p>{ post.lastModified }</p>
 						</CardHeader>
 						<CardContent>
 							<CardDescription>{post.data.description}</CardDescription>
