@@ -5,6 +5,6 @@ const t = useTranslations(lang)
 const translatePath = useTranslatedPath(lang)
 ---
 <div class="flex flex-col lg:flex-row lg:gap-4">
-  <a class="block p-2" href={translatePath('/')}>{t('nav.home')}</a>
-  <a class="block p-2" href={translatePath('/tags/')}>{t('nav.tags')}</a>
+  <a class="block p-2 whitespace-nowrap" href={translatePath('/')}>{t('nav.home')}</a>
+  <a class="block p-2 whitespace-nowrap" href={translatePath('/tags/')}>{t('nav.tags')}</a>
 </div>

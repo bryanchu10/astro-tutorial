@@ -1,29 +1,21 @@
 ---
 import { languages } from "@/i18n/ui";
 import { getLangFromUrl, useTranslatedPath, usePathWithoutLang } from "@/i18n/utils";
+import Select from '@/components/LanguageSelect';
+
 const lang = getLangFromUrl(Astro.url);
 const translatePath = useTranslatedPath(lang);
 const { pathname } = Astro.url;
 const pathWithoutLang = usePathWithoutLang(lang);
+
+const defaultValue = translatePath(pathWithoutLang(pathname), lang);
+const languageOptions = Object.entries(languages).map(([lang, label]) => { 
+  const hrefValue = translatePath(pathWithoutLang(pathname), lang);
+  return { value: hrefValue, label };
+});
 ---
-
-<ul class="language-picker">
-  {Object.entries(languages).map(([lang, label]) => (
-    <li>
-      <a href={translatePath(pathWithoutLang(pathname), lang)}>{label}</a>
-    </li>
-  ))}
-</ul>
-
-<style>
-  .language-picker {
-    display: flex;
-    gap: 0.5rem;
-    padding-left: 0;
-    margin: 0;
-    align-items: center;
-  }
-  .language-picker li {
-    list-style: none;
-  }
-</style>
+<Select
+  defaultValue={defaultValue}
+  options={languageOptions}
+  client:load
+/>
