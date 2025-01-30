@@ -1,0 +1,59 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { getLangFromUrl, useTranslations, useTranslatedPath } from "@/i18n/utils";
+import {
+	Card,
+	CardImage,
+	CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { buttonVariants } from "@/components/ui/button";
+import type { GetStaticPathsOptions } from "astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatedPath = useTranslatedPath(lang);
+const pageTitle = t('index.title');
+const allPosts = await getCollection('blog', ({ id }) => {
+  return id.startsWith(lang.toLowerCase());
+});
+export async function getStaticPaths(options: GetStaticPathsOptions) {
+  const { paginate } = options;
+  const allPosts = await getCollection('blog');
+  // 分類預設語系和英語的內容
+  const currentLangPosts = allPosts.filter(post => post.id.split('/')[0] === 'en');
+
+	return paginate(currentLangPosts, { pageSize: 9 });
+}
+
+const { page } = Astro.props;
+---
+<BaseLayout pageTitle={pageTitle}>
+	<h1 class="hidden">{t('index.h1')}</h1>
+	<div class="fixed font-noto-serif text-5xl md:text-9xl leading-tight opacity-5 font-medium">We do something not because we want to see it done.</div>
+	<div class="relative container mx-auto px-4 py-8">
+		<ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+			{page.data.map((post) => (
+				<li class="flex">
+					<Card>
+						<CardImage src={post.data.image.url} alt={post.data.image.alt} />
+						<CardHeader>
+							<CardTitle>{post.data.title}</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<CardDescription>{post.data.description}</CardDescription>
+						</CardContent>
+						<CardFooter>
+							<a class:list={[buttonVariants({ variant: "outline" }), 'list', 'after:absolute', 'after:inset-0']} href={translatedPath(`/posts/${post.id.split('/')[1]}/${post.data.urlTitle}`)} title="">{t('card.readMore')}</a>
+						</CardFooter>
+					</Card>
+				</li>
+			))}
+		</ul>
+	</div>
+
+</BaseLayout>
